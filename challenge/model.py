@@ -22,7 +22,7 @@ class DelayModel:
     def __init__(
         self
     ):
-        self._model = None # Model should be saved in this attribute.
+        self._model = None  # Model should be saved in this attribute.
         self.preprocessor = Preprocessor()
         self.top_10_features = [
             "OPERA_Latin American Wings",
@@ -80,7 +80,7 @@ class DelayModel:
         if target_column:
             target = data[target_column]
             return features[self.top_10_features].reindex(columns=self.top_10_features, fill_value=0), target.to_frame()
-        
+
         return features[self.top_10_features].reindex(columns=self.top_10_features, fill_value=0)
 
     def fit(
@@ -117,7 +117,7 @@ class DelayModel:
 
         Args:
             features (pd.DataFrame): preprocessed data.
-        
+
         Returns:
             (List[int]): predicted targets.
         """
@@ -130,6 +130,6 @@ class DelayModel:
         predictions = np.array(self._model.predict(features))
 
         return predictions.tolist()
-    
+
     def load_model(self, model):
         self._model = model
