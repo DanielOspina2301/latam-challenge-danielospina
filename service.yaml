@@ -1,0 +1,25 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: api-service
+  annotations:
+    run.googleapis.com/vpc-access-connector: projects/test-mle/locations/us-central1/connectors/connector-redis
+    run.googleapis.com/vpc-access-egress: all
+spec:
+  template:
+    spec:
+      containers:
+        - image: us-central1-docker.pkg.dev/test-mle/test-repo/api:latest
+          env:
+            - name: dataset_id
+              value: test_mle_bq
+            - name: MODELS_BUCKET_NAME
+              value: trained_models_delay_test
+            - name: project_id
+              value: test-mle
+            - name: table_id
+              value: metrics
+            - name: REDIS_HOST
+              value: 10.183.250.251
+          ports:
+            - containerPort: 8080
