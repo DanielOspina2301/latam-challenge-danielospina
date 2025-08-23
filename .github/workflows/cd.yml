@@ -42,7 +42,7 @@ jobs:
           gcloud run deploy $SERVICE_NAME \
             --image ${{ env.DOCKER_IMAGE_URL }}:latest \
             --platform managed \
-            --vpc-connector my-connector \
+            --vpc-connector connector-redis \
             --region us-east1 \
             --allow-unauthenticated \
             --set-env-vars dataset_id=${{ secrets.dataset_id }},MODELS_BUCKET_NAME=${{ secrets.MODELS_BUCKET_NAME }} \
