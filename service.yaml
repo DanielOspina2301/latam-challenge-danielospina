@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: flight-delay
+  name: api-service
   annotations:
     run.googleapis.com/vpc-access-connector: projects/test-mle/locations/us-central1/connectors/connector-redis
     run.googleapis.com/vpc-access-egress: all

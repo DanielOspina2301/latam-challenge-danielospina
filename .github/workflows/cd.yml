@@ -1,7 +1,44 @@
 name: 'Continuous Delivery'
 
-on:
-  ...
+env:
+  SERVICE_NAME: api-service
+  PROJECT_ID: test-mle
+  DOCKER_IMAGE_URL: us-central1-docker.pkg.dev/test-mle/test-repo/api
+
+  on:
+    push:
+    branches:
+      - main
 
 jobs:
-  ...
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Google Cloud Auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Set up up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
+          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run services replace service.yaml \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated
