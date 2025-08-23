@@ -1,13 +1,12 @@
-[project]
+[tool.poetry]
 name = "challenge-mle-danielospina"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "DanielOspina2301",email = "daniel.alberto.ospina@gmail.com"}
-]
+authors = ["DanielOspina2301 <daniel.alberto.ospina@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.9"
+
 [tool.poetry.dependencies]
+python = "^3.9"
 fastapi = ">=0.86.0,<0.87.0"
 pydantic = ">=1.10.2,<1.11.0"
 uvicorn = ">=0.15.0,<0.16.0"
@@ -20,6 +19,7 @@ xgboost = ">=2.1.2,<2.2.0"
 google-cloud-storage = ">=2.18.2,<2.19.0"
 google-cloud-bigquery = ">=3.26.0,<3.27.0"
 redis = "^5.2.0"
+typing-extensions = "^4.12.2"
 
 
 [build-system]

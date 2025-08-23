@@ -73,13 +73,15 @@ class DelayModel:
         except Exception:
             raise HTTPException(status_code=500, detail="Internal server error")
 
+        for column in self.top_10_features:
+            if column not in features.columns:
+                features[column] = 0
+
         if target_column:
             target = data[target_column]
-            return features[self.top_10_features], target.to_frame()
-
-        features = features.reindex(columns=self.top_10_features, fill_value=0)
-
-        return features[self.top_10_features]
+            return features[self.top_10_features].reindex(columns=self.top_10_features, fill_value=0), target.to_frame()
+        
+        return features[self.top_10_features].reindex(columns=self.top_10_features, fill_value=0)
 
     def fit(
         self,

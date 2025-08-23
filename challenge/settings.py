@@ -12,5 +12,5 @@ class Settings(BaseSettings):
     dataset_id: str = ''
     table_id: str = ''
 
-    REDIS_HOST: str = "localhost"
+    REDIS_HOST: str = ""
     REDIS_PORT: int = 6379
