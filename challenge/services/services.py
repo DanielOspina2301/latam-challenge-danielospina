@@ -10,10 +10,12 @@ from challenge.schemas.templates import RequestTemplate
 from challenge.services.redis_service import cache_prediction, generate_request_key, get_cached_prediction
 from challenge.settings import Settings
 from challenge.storage.storage_functions import save_model_in_storage, get_file, get_training_data, get_trained_model
+from challenge.utils.logger import get_logger
 from challenge.utils.utils import load_data_from_csv
 
 settings = Settings()
 model = DelayModel()
+logger = get_logger()
 
 
 def train_model(bucket_name: str, cloud_data: bool) -> str:
@@ -24,7 +26,9 @@ def train_model(bucket_name: str, cloud_data: bool) -> str:
         data = load_data_from_csv(csv_data='./data/data.csv', cloud_data=cloud_data)
 
     features, target = model.preprocess(data=data, target_column='delay')
+    logger.info('Preprocess finished')
     metrics, training_model = model.fit(features=features, target=target)
+    logger.info('Fit finished')
 
     with open('./models/model.pkl', 'wb') as file:
         pickle.dump(model, file)
@@ -66,6 +70,7 @@ def update_model(model_name: str = None, cloud: bool = False):
 
                 with open('./models/model.pkl', 'wb') as file:
                     pickle.dump(model, file)
+                return 'Success'
             else:
                 raise HTTPException(status_code=404, detail=f'Model {model_name} does not exist in the bucket.')
 
@@ -76,9 +81,11 @@ def update_model(model_name: str = None, cloud: bool = False):
 
             with open('./models/model.pkl', 'wb') as file:
                 pickle.dump(model, file)
+            return 'Success'
         else:
             raise HTTPException(status_code=404, detail='There are no models in the bucket.')
 
     with open('./models/model.pkl', 'rb') as saved_model:
         saved_model = pickle.load(saved_model)
         model.load_model(model=saved_model)
+    return 'Success'
