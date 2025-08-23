@@ -38,6 +38,13 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run services replace service.yaml \
-            --region us-central1 \
-            --platform managed
+          echo SERVICE_NAME $SERVICE_NAME
+          gcloud run deploy $SERVICE_NAME \
+            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
+            --platform managed \
+            --vpc-connector my-connector \
+            --region us-east1 \
+            --allow-unauthenticated \
+            --set-env-vars dataset_id=${{ secrets.dataset_id }},MODELS_BUCKET_NAME=${{ secrets.MODELS_BUCKET_NAME }} \
+            --set-env-vars project_id=${{ secrets.project_id }},table_id=${{ secrets.table_id }} \
+            --set-env-vars REDIS_HOST=${{ secrets.REDIS_HOST }}
