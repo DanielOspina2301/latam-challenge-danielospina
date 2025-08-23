@@ -138,7 +138,7 @@ Additionally, a dashboard was created in Looker Studio to monitor the performanc
 To provide a user-friendly way to interact with the model, I created a frontend using Google Apps Script.
 
 ### Approach:
-- The frontend is accessible via the following link: [https://script.google.com/macros/s/AKfycbwtZnmrpLUPWNrox27VN2XNxTxDQR7BmADE_9uQPEB_cwvU5sXod_oEMj6BtvsY5J3W/exec](https://script.google.com/macros/s/AKfycbwtZnmrpLUPWNrox27VN2XNxTxDQR7BmADE_9uQPEB_cwvU5sXod_oEMj6BtvsY5J3W/exec). And allows users to query flight delay probabilities easily.
+- The frontend is accessible via the following link: [https://script.google.com/macros/s/AKfycbzi7RxWS-ci69S2_eEXqa3P6M02BEqpFshPYaYAv_ajBdbGCXGImb8o7xODwXARQeix/exec](https://script.google.com/macros/s/AKfycbzi7RxWS-ci69S2_eEXqa3P6M02BEqpFshPYaYAv_ajBdbGCXGImb8o7xODwXARQeix/exec). And allows users to query flight delay probabilities easily.
 
 - It loads flight data from a BigQuery table and displays it in a user interface.
 
