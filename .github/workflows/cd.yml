@@ -5,8 +5,8 @@ env:
   PROJECT_ID: test-mle
   DOCKER_IMAGE_URL: us-central1-docker.pkg.dev/test-mle/test-repo/api
 
-  on:
-    push:
+on:
+  push:
     branches:
       - main
 
